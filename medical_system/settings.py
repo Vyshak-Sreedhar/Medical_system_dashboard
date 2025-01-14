@@ -63,6 +63,9 @@ DATABASES = {
     }
 }
 
+ALLOWED_HOSTS = ['medical-system-dashboard.onrender.com', 'localhost', '127.0.0.1']
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
