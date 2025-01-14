@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .success-message {
+            color: #059669;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            margin-top: 0.25rem;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #2563eb;
+            ring: 2px solid #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="{% url 'dashboard' %}" class="flex items-center py-4">
+                            <span class="font-semibold text-gray-700 text-lg">Medical System</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="py-2 px-4 text-gray-700 hover:text-gray-900">Dashboard</a>
+                        <a href="{% url 'logout' %}" class="py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 transition duration-300">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="py-2 px-4 text-gray-700 hover:text-gray-900">Login</a>
+                        <a href="{% url 'register' %}" class="py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300">Sign Up</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded {% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
