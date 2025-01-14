@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: django-medical-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn medical_project.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: django_medical_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DJANGO_SETTINGS_MODULE
+        value: medical_project.settings
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: DJANGO_DEBUG
+        value: false
+    healthCheckPath: /health/
+    autoDeploy: true
+
+databases:
+  - name: django_medical_db
+    databaseName: django_medical_db
+    user: django_medical_user
+    plan: starter
+
+staticAssetsDirectory: staticfiles
